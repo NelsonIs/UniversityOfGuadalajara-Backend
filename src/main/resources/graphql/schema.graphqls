@@ -1,0 +1,37 @@
+type Query{
+	getStudents: [Student]
+	getStudent(studentId: ID!): Student
+	getCampuses: [Campus]
+}
+
+type Student{
+	studentId: ID
+	firstName: String
+	lastName: String
+	email: String
+	major: Major
+	campus: Campus
+}
+
+type Campus{
+	campusId: ID
+	name: String
+	abbreviation: String
+	address: String
+}
+
+type Major{
+	majorId: ID
+	name: String
+	numOfSemesters: Int
+	area: AreasOfMajors
+}
+
+enum AreasOfMajors{
+	ENGINEERING
+	ART
+	HEALTH
+	HUMANITY
+	SPORTS
+	BUSINESS
+}
