@@ -33,6 +33,7 @@ public class UniversityOfGuadalajaraBackEndApplication {
 				//Quitas el permiso graphql, sólo lo habilité para poder ver la consola de graphiql
 				//Comentario X
 				//Comentario Y
+				//Comentario Z
 				.antMatchers(HttpMethod.GET, "/graphiql/**", "/subscriptions", "/vendor/**", "/graphql").permitAll()
 				.antMatchers(HttpMethod.POST, "/graphiql/**", "/subscriptions", "/vendor/**", "/graphql").permitAll()
 				.anyRequest().authenticated();
