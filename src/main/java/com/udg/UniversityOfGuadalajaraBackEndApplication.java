@@ -34,6 +34,7 @@ public class UniversityOfGuadalajaraBackEndApplication {
 				//Comentario X
 				//Comentario Y
 				//Comentario Z
+				//Comentario A
 				.antMatchers(HttpMethod.GET, "/graphiql/**", "/subscriptions", "/vendor/**", "/graphql").permitAll()
 				.antMatchers(HttpMethod.POST, "/graphiql/**", "/subscriptions", "/vendor/**", "/graphql").permitAll()
 				.anyRequest().authenticated();
