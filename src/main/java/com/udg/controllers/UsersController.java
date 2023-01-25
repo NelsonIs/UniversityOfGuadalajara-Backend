@@ -3,10 +3,12 @@ package com.udg.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,32 +18,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.udg.entities.Users;
 import com.udg.entities.responses.Response;
+import com.udg.repositories.UsersRepository;
 import com.udg.services.UsersService;
 
 @RestController
+@Controller
 @RequestMapping("/users")
 public class UsersController {
 	@Autowired
 	private UsersService usersService;
+	@Autowired
+	private UsersRepository usersRepository;
 	private Response<Users> response;
 	
-	@GetMapping
-	public ResponseEntity<Response<List<Users>>> getUsers(){
-		Response<List<Users>> response = new Response<>();
-		response = usersService.getUsers();
-		if(response.getEntity() != null) {
-			return new ResponseEntity<Response<List<Users>>>(response, HttpStatus.OK);
-		}
-		return new ResponseEntity<Response<List<Users>>>(response, HttpStatus.BAD_REQUEST);
+	@QueryMapping
+	public List<Users> getUsers() {
+		return usersRepository.findAll();
 	}
 	
-	@GetMapping("/{username}")
-	public ResponseEntity<Response<Users>> getUser(@PathVariable("username") String username){
-		response = usersService.getUser(username);
-		if(response.getEntity() != null) {
-			return new ResponseEntity<Response<Users>>(response, HttpStatus.OK);
-		}
-		return new ResponseEntity<Response<Users>>(response, HttpStatus.BAD_REQUEST);
+	@QueryMapping
+	public Users getUser(@Argument String username) {
+		return usersRepository.findById(username).get();
 	}
 	
 	@PostMapping

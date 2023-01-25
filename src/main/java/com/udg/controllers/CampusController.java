@@ -3,10 +3,12 @@ package com.udg.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,32 +18,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.udg.entities.Campus;
 import com.udg.entities.responses.Response;
+import com.udg.repositories.CampusRepository;
 import com.udg.services.CampusService;
 
 @RestController
+@Controller
 @RequestMapping("/campus")
 public class CampusController {
 	@Autowired
 	private CampusService campusService;
+	@Autowired
+	private CampusRepository campusRepository;
 	private Response<Campus> response;
 	
-	@GetMapping
-	public ResponseEntity<Response<List<Campus>>> getCampuses(){
-		Response<List<Campus>> response = new Response<>();
-		response = campusService.getCampuses();
-		if(response.getEntity() != null) {
-			return new ResponseEntity<Response<List<Campus>>>(response, HttpStatus.OK);
-		}
-		return new ResponseEntity<Response<List<Campus>>>(response, HttpStatus.BAD_REQUEST);
+	@QueryMapping
+	public List<Campus> getCampuses() {
+		return campusRepository.findAll();
 	}
 	
-	@GetMapping("/{campusId}")
-	public ResponseEntity<Response<Campus>> getCampus(@PathVariable("campusId") Long campusId){
-		response = campusService.getCampus(campusId);
-		if(response.getEntity() != null) {
-			return new ResponseEntity<Response<Campus>>(response, HttpStatus.OK);
-		}
-		return new ResponseEntity<Response<Campus>>(response, HttpStatus.BAD_REQUEST);
+	@QueryMapping
+	public Campus getCampus(@Argument Long campusId) {
+		return campusRepository.findById(campusId).get();
 	}
 	
 	@PostMapping
