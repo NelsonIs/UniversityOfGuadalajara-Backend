@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,13 +41,14 @@ public class CampusController {
 		return campusRepository.findById(campusId).get();
 	}
 	
-	@PostMapping
-	public ResponseEntity<Response<Campus>> createCampus(@RequestBody Campus campus){
-		response = campusService.createCampus(campus);
-		if(response.getEntity() != null) {
-			return new ResponseEntity<Response<Campus>>(response, HttpStatus.CREATED);
-		}
-		return new ResponseEntity<Response<Campus>>(response, HttpStatus.BAD_REQUEST);
+	@MutationMapping
+	public Campus createCampus(@Argument String name, @Argument String abbreviation, @Argument String address) {
+		return campusRepository.save(
+				Campus.builder()
+				.name(name)
+				.abbreviation(abbreviation)
+				.address(address)
+				.build());
 	}
 	
 	@PutMapping

@@ -1,14 +1,3 @@
-type Query{
-	getStudents: [Student]
-	getStudent(studentId: ID!): Student
-	getCampuses: [Campus]
-	getCampus(campusId: ID!): Campus
-	getMajors: [Major]
-	getMajor(majorId: ID!): Major
-	getUsers: [Users]
-	getUser(username: ID!): Users
-}
-
 type Users{
 	username: ID
 	password: String
@@ -42,15 +31,15 @@ type Major{
 }
 
 enum AreasOfMajors{
-	ENGINEERING
-	ART
-	HEALTH
-	HUMANITY
-	SPORTS
+	ENGINEERING,
+	ART,
+	HEALTH,
+	HUMANITY,
+	SPORTS,
 	BUSINESS
 }
 
 enum TypeUsers{
-	USER
+	USER,
 	ADMIN
 }

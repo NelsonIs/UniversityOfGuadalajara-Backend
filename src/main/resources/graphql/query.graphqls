@@ -1,0 +1,10 @@
+type Query{
+	getStudents: [Student]
+	getStudent(studentId: ID!): Student
+	getCampuses: [Campus]
+	getCampus(campusId: ID!): Campus
+	getMajors: [Major]
+	getMajor(majorId: ID!): Major
+	getUsers: [Users]
+	getUser(username: ID!): Users
+}

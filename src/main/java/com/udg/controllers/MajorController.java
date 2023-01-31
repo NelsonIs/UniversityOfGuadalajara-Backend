@@ -4,18 +4,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.udg.entities.AreasOfMajors;
 import com.udg.entities.Major;
 import com.udg.entities.responses.Response;
 import com.udg.repositories.MajorRepository;
@@ -41,13 +42,13 @@ public class MajorController {
 		return majorRepository.findById(majorId).get();
 	}
 	
-	@PostMapping
-	public ResponseEntity<Response<Major>> createMajor(@RequestBody Major major){
-		response = majorService.createMajor(major);
-		if(response.getEntity() != null) {
-			return new ResponseEntity<Response<Major>>(response, HttpStatus.CREATED);
-		}
-		return new ResponseEntity<Response<Major>>(response, HttpStatus.BAD_REQUEST);
+	@MutationMapping
+	public Major createMajor(@Argument String name, @Argument int numOfSemesters, @Argument AreasOfMajors area) {
+		return majorRepository.save(Major.builder()
+				.name(name)
+				.numOfSemesters(numOfSemesters)
+				.area(area)
+				.build());
 	}
 	
 	@PutMapping

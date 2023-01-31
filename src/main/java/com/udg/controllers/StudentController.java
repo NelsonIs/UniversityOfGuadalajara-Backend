@@ -4,18 +4,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.udg.entities.Campus;
+import com.udg.entities.Major;
 import com.udg.entities.Student;
 import com.udg.entities.responses.Response;
 import com.udg.repositories.StudentRepository;
@@ -41,13 +43,17 @@ public class StudentController {
 		return studentRepository.findById(studentId).get();
 	}
 	
-	@PostMapping
-	public ResponseEntity<Response<Student>> createStudent(@RequestBody Student student){
-		response = studentService.createStudent(student);
-		if(response.getEntity() != null) {
-			return new ResponseEntity<Response<Student>>(response, HttpStatus.CREATED);
-		}
-		return new ResponseEntity<Response<Student>>(response, HttpStatus.BAD_REQUEST);
+	@MutationMapping
+	public Student createStudent(@Argument Long studentId, @Argument String firstName, @Argument String lastName,
+			@Argument String email, @Argument Major major, @Argument Campus campus) {
+		return studentRepository.save(Student.builder()
+				.studentId(studentId)
+				.firstName(firstName)
+				.lastName(lastName)
+				.email(email)
+				.major(major)
+				.campus(campus)
+				.build());
 	}
 	
 	@PutMapping

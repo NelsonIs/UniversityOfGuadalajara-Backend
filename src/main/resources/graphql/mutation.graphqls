@@ -1,0 +1,20 @@
+type Mutation{
+	createStudent(studentId: ID! firstName: String! lastName: String! email: String! major: MajorInput! campus: CampusInput): Student
+	createMajor(name: String! numOfSemesters: Int! area: AreasOfMajors!): Major
+	createCampus(name: String! abbreviation: String! address: String!): Campus
+	
+}
+
+input MajorInput{
+	majorId: ID
+	name: String!
+	numOfSemesters: Int!
+	area: AreasOfMajors!
+}
+
+input CampusInput{
+	campusId: ID
+	name: String!
+	abbreviation: String!
+	address: String!
+}
