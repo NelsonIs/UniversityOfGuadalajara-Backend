@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.udg.entities.AreasOfMajors;
 import com.udg.entities.Major;
 import com.udg.entities.responses.Response;
-import com.udg.repositories.MajorRepository;
 import com.udg.services.MajorService;
 
 @RestController
@@ -26,23 +25,21 @@ import com.udg.services.MajorService;
 public class MajorController {
 	@Autowired
 	private MajorService majorService;
-	@Autowired
-	private MajorRepository majorRepository;
 	private Response<Major> response;
 	
 	@QueryMapping
-	public List<Major> getMajors() {
-		return majorRepository.findAll();
+	public Response<List<Major>> getMajors() {
+		return majorService.getMajors();
 	}
 	
 	@QueryMapping
-	public Major getMajor(@Argument Long majorId) {
-		return majorRepository.findById(majorId).get();
+	public Response<Major> getMajor(@Argument Long majorId) {
+		return majorService.getMajor(majorId);
 	}
 	
 	@MutationMapping
-	public Major createMajor(@Argument String name, @Argument int numOfSemesters, @Argument AreasOfMajors area) {
-		return majorRepository.save(Major.builder()
+	public Response<Major> createMajor(@Argument String name, @Argument int numOfSemesters, @Argument AreasOfMajors area) {
+		return majorService.createMajor(Major.builder()
 				.name(name)
 				.numOfSemesters(numOfSemesters)
 				.area(area)
@@ -50,8 +47,8 @@ public class MajorController {
 	}
 	
 	@MutationMapping
-	public Major updateMajor(@Argument String name, @Argument int numOfSemesters, @Argument AreasOfMajors area) {
-		return majorRepository.save(Major.builder()
+	public Response<Major> updateMajor(@Argument String name, @Argument int numOfSemesters, @Argument AreasOfMajors area) {
+		return majorService.updateMajor(Major.builder()
 				.name(name)
 				.numOfSemesters(numOfSemesters)
 				.area(area)

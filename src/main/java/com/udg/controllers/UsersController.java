@@ -11,16 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.udg.entities.TypeUsers;
 import com.udg.entities.Users;
 import com.udg.entities.responses.Response;
-import com.udg.repositories.UsersRepository;
 import com.udg.services.UsersService;
 
 @RestController
@@ -29,24 +25,22 @@ import com.udg.services.UsersService;
 public class UsersController {
 	@Autowired
 	private UsersService usersService;
-	@Autowired
-	private UsersRepository usersRepository;
 	private Response<Users> response;
 	
 	@QueryMapping
-	public List<Users> getUsers() {
-		return usersRepository.findAll();
+	public Response<List<Users>> getUsers() {
+		return usersService.getUsers();
 	}
 	
 	@QueryMapping
-	public Users getUser(@Argument String username) {
-		return usersRepository.findById(username).get();
+	public Response<Users> getUser(@Argument String username) {
+		return usersService.getUser(username);
 	}
 	
 	@MutationMapping
-	public Users createUser(@Argument String username, @Argument String password, 
+	public Response<Users> createUser(@Argument String username, @Argument String password, 
 			@Argument String email, @Argument TypeUsers role, @Argument String firstName, @Argument String lastName){
-		return usersRepository.save(Users.builder()
+		return usersService.createUser(Users.builder()
 				.username(username)
 				.password(password)
 				.email(email)
@@ -57,9 +51,9 @@ public class UsersController {
 	}
 	
 	@MutationMapping
-	public Users updateUser(@Argument String username, @Argument String password, 
+	public Response<Users> updateUser(@Argument String username, @Argument String password, 
 			@Argument String email, @Argument TypeUsers role, @Argument String firstName, @Argument String lastName){
-		return usersRepository.save(Users.builder()
+		return usersService.updateUser(Users.builder()
 				.username(username)
 				.password(password)
 				.email(email)

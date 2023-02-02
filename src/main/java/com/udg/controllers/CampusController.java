@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.udg.entities.Campus;
 import com.udg.entities.responses.Response;
-import com.udg.repositories.CampusRepository;
 import com.udg.services.CampusService;
 
 @RestController
@@ -25,23 +24,21 @@ import com.udg.services.CampusService;
 public class CampusController {
 	@Autowired
 	private CampusService campusService;
-	@Autowired
-	private CampusRepository campusRepository;
 	private Response<Campus> response;
 	
 	@QueryMapping
-	public List<Campus> getCampuses() {
-		return campusRepository.findAll();
+	public Response<List<Campus>> getCampuses() {
+		return campusService.getCampuses();
 	}
 	
 	@QueryMapping
-	public Campus getCampus(@Argument Long campusId) {
-		return campusRepository.findById(campusId).get();
+	public Response<Campus> getCampus(@Argument Long campusId) {
+		return campusService.getCampus(campusId);
 	}
 	
 	@MutationMapping
-	public Campus createCampus(@Argument String name, @Argument String abbreviation, @Argument String address) {
-		return campusRepository.save(
+	public Response<Campus> createCampus(@Argument String name, @Argument String abbreviation, @Argument String address) {
+		return campusService.createCampus(
 				Campus.builder()
 				.name(name)
 				.abbreviation(abbreviation)
@@ -50,8 +47,8 @@ public class CampusController {
 	}
 	
 	@MutationMapping
-	public Campus updateCampus(@Argument String name, @Argument String abbreviation, @Argument String address) {
-		return campusRepository.save(
+	public Response<Campus> updateCampus(@Argument String name, @Argument String abbreviation, @Argument String address) {
+		return campusService.updateCampus(
 				Campus.builder()
 				.name(name)
 				.abbreviation(abbreviation)

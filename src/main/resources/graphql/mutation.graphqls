@@ -1,13 +1,18 @@
 type Mutation{
-	createStudent(studentId: ID! firstName: String! lastName: String! email: String! major: MajorInput! campus: CampusInput): Student
-	updateStudent(studentId: ID! firstName: String! lastName: String! email: String! major: MajorInput! campus: CampusInput): Student
+	createStudent(studentId: ID! firstName: String! lastName: String! email: String! major: MajorInput! campus: CampusInput): ResponseStudent
+	updateStudent(studentId: ID! firstName: String! lastName: String! email: String! major: MajorInput! campus: CampusInput): ResponseStudent
 	deleteStudent(studentId: ID!): Boolean
-	createMajor(name: String! numOfSemesters: Int! area: AreasOfMajors!): Major
-	updateMajor(name: String! numOfSemesters: Int! area: AreasOfMajors!): Major
-	createCampus(name: String! abbreviation: String! address: String!): Campus
-	updateCampus(name: String! abbreviation: String! address: String!): Campus
-	createUser(username: String! password: String! email: String! role: TypeUsers! firstName: String! lastName: String!): Users
-	updateUser(username: String! password: String! email: String! role: TypeUsers! firstName: String! lastName: String!): Users
+	createMajor(name: String! numOfSemesters: Int! area: AreasOfMajors!): ResponseMajor
+	updateMajor(name: String! numOfSemesters: Int! area: AreasOfMajors!): ResponseMajor
+	createCampus(name: String! abbreviation: String! address: String!): ResponseCampus
+	updateCampus(name: String! abbreviation: String! address: String!): ResponseCampus
+	createUser(username: ID! password: String! email: String! role: TypeUsers! firstName: String! lastName: String!): ResponseUser
+	updateUser(username: ID! password: String! email: String! role: TypeUsers! firstName: String! lastName: String!): ResponseUser
+}
+
+input UsersInput{
+	username: ID!
+	password: String!
 }
 
 input MajorInput{

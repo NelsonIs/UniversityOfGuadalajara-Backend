@@ -1,10 +1,10 @@
 type Query{
-	getStudents: [Student]
-	getStudent(studentId: ID!): Student
-	getCampuses: [Campus]
-	getCampus(campusId: ID!): Campus
-	getMajors: [Major]
-	getMajor(majorId: ID!): Major
-	getUsers: [Users]
-	getUser(username: ID!): Users
+	getStudents: ResponseListStudent
+	getStudent(studentId: ID!): ResponseStudent
+	getCampuses: ResponseListCampus
+	getCampus(campusId: ID!): ResponseCampus
+	getMajors: ResponseListMajor
+	getMajor(majorId: ID!): ResponseMajor
+	getUsers: ResponseListUser
+	getUser(username: ID!): ResponseUser
 }

@@ -18,7 +18,6 @@ import com.udg.entities.Campus;
 import com.udg.entities.Major;
 import com.udg.entities.Student;
 import com.udg.entities.responses.Response;
-import com.udg.repositories.StudentRepository;
 import com.udg.services.StudentService;
 
 @RestController
@@ -27,24 +26,22 @@ import com.udg.services.StudentService;
 public class StudentController {
 	@Autowired
 	private StudentService studentService;
-	@Autowired
-	private StudentRepository studentRepository;
 	private Response<Student> response;
 	
 	@QueryMapping
-	public List<Student> getStudents() {
-		return studentRepository.findAll();
+	public Response<List<Student>> getStudents() {
+		return studentService.getStudents();
 	}
 	
 	@QueryMapping
-	public Student getStudent(@Argument Long studentId) {
-		return studentRepository.findById(studentId).get();
+	public Response<Student> getStudent(@Argument Long studentId) {
+		return studentService.getStudent(studentId);
 	}
 	
 	@MutationMapping
-	public Student createStudent(@Argument Long studentId, @Argument String firstName, @Argument String lastName,
+	public Response<Student> createStudent(@Argument Long studentId, @Argument String firstName, @Argument String lastName,
 			@Argument String email, @Argument Major major, @Argument Campus campus) {
-		return studentRepository.save(Student.builder()
+		return studentService.createStudent(Student.builder()
 				.studentId(studentId)
 				.firstName(firstName)
 				.lastName(lastName)
@@ -55,9 +52,9 @@ public class StudentController {
 	}
 	
 	@MutationMapping
-	public Student updateStudent(@Argument Long studentId, @Argument String firstName, @Argument String lastName,
+	public Response<Student> updateStudent(@Argument Long studentId, @Argument String firstName, @Argument String lastName,
 			@Argument String email, @Argument Major major, @Argument Campus campus) {
-		return studentRepository.save(Student.builder()
+		return studentService.updateStudent(Student.builder()
 				.studentId(studentId)
 				.firstName(firstName)
 				.lastName(lastName)

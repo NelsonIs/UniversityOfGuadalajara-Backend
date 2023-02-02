@@ -1,0 +1,35 @@
+type ResponseStudent{
+	msg: String
+	entity: Student
+}
+type ResponseListStudent{
+	msg: String
+	entity: [Student]
+}
+
+type ResponseMajor{
+	msg: String
+	entity: Major
+}
+type ResponseListMajor{
+	msg: String
+	entity: [Major]
+}
+
+type ResponseCampus{
+	msg: String
+	entity: Campus
+}
+type ResponseListCampus{
+	msg: String
+	entity: [Campus]
+}
+
+type ResponseUser{
+	msg: String
+	entity: Users
+}
+type ResponseListUser{
+	msg: String
+	entity: [Users]
+}

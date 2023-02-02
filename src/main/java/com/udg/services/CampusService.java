@@ -1,5 +1,7 @@
 package com.udg.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,30 @@ public class CampusService {
 	@Autowired
 	private CampusRepository campusRepository;
 	private Response<Campus> response;
+	
+	public Response<List<Campus>> getCampuses(){
+		Response<List<Campus>> response = new Response<>();
+		try {
+			response.setEntity(campusRepository.findAll());
+			response.setMsg(campusRepository.count() == 0 ? "Ups.. Your DataBase is empty.": "Succes! Campuses found.");
+		}catch(Exception e) {
+			response = new Response<>();
+			response.setMsg("Ups... Something was wrong: " + e.getMessage());
+		}
+		return response;
+	}
+	
+	public Response<Campus> getCampus(Long campusId){
+		response = new Response<>();
+		try {
+			response.setEntity(campusRepository.findById(campusId).get());
+			response.setMsg("Succes! Campus found.");
+		}catch(Exception e) {
+			response = new Response<>();
+			response.setMsg("Ups... Something was wrong: " + e.getMessage());
+		}
+		return response;
+	}
 	
 	public Response<Campus> createCampus(Campus campus){
 		response = new Response<>();
