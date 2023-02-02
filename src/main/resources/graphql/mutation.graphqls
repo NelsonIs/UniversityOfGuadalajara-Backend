@@ -1,8 +1,13 @@
 type Mutation{
 	createStudent(studentId: ID! firstName: String! lastName: String! email: String! major: MajorInput! campus: CampusInput): Student
+	updateStudent(studentId: ID! firstName: String! lastName: String! email: String! major: MajorInput! campus: CampusInput): Student
+	deleteStudent(studentId: ID!): Boolean
 	createMajor(name: String! numOfSemesters: Int! area: AreasOfMajors!): Major
+	updateMajor(name: String! numOfSemesters: Int! area: AreasOfMajors!): Major
 	createCampus(name: String! abbreviation: String! address: String!): Campus
-	
+	updateCampus(name: String! abbreviation: String! address: String!): Campus
+	createUser(username: String! password: String! email: String! role: TypeUsers! firstName: String! lastName: String!): Users
+	updateUser(username: String! password: String! email: String! role: TypeUsers! firstName: String! lastName: String!): Users
 }
 
 input MajorInput{

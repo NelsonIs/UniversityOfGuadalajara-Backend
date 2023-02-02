@@ -7,6 +7,15 @@ type Users{
 	lastName: String
 }
 
+type Users{
+	username: String
+	password: String
+	email: String
+	role: TypeUsers
+	firstName: String
+	lastName: String
+}
+
 type Student{
 	studentId: ID
 	firstName: String

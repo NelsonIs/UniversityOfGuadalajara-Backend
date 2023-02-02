@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,13 +49,13 @@ public class MajorController {
 				.build());
 	}
 	
-	@PutMapping
-	public ResponseEntity<Response<Major>> updateMajor(@RequestBody Major major){
-		response = majorService.updateMajor(major);
-		if(response.getEntity() != null) {
-			return new ResponseEntity<Response<Major>>(response, HttpStatus.OK);
-		}
-		return new ResponseEntity<Response<Major>>(response, HttpStatus.BAD_REQUEST);
+	@MutationMapping
+	public Major updateMajor(@Argument String name, @Argument int numOfSemesters, @Argument AreasOfMajors area) {
+		return majorRepository.save(Major.builder()
+				.name(name)
+				.numOfSemesters(numOfSemesters)
+				.area(area)
+				.build());
 	}
 	
 	@DeleteMapping("/{majorId}")

@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,13 +54,17 @@ public class StudentController {
 				.build());
 	}
 	
-	@PutMapping
-	public ResponseEntity<Response<Student>> updateStudent(@RequestBody Student student){
-		response = studentService.updateStudent(student);
-		if(response.getEntity() != null) {
-			return new ResponseEntity<Response<Student>>(response, HttpStatus.OK);
-		}
-		return new ResponseEntity<Response<Student>>(response, HttpStatus.BAD_REQUEST);
+	@MutationMapping
+	public Student updateStudent(@Argument Long studentId, @Argument String firstName, @Argument String lastName,
+			@Argument String email, @Argument Major major, @Argument Campus campus) {
+		return studentRepository.save(Student.builder()
+				.studentId(studentId)
+				.firstName(firstName)
+				.lastName(lastName)
+				.email(email)
+				.major(major)
+				.campus(campus)
+				.build());
 	}
 	
 	@DeleteMapping("/{studentId}")
