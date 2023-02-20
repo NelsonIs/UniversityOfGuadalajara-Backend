@@ -20,6 +20,9 @@ public class LoginService {
 			if(usersRepository.findById(user.getUsername()).get().getPassword().equals(user.getPassword())) {
 				loginResponse.setMsg("Login Succes!");
 				loginResponse.setToken(JWTGenerator.getJWTToken(user.getUsername()));
+				Users userAux = usersRepository.findById(user.getUsername()).get();
+				userAux.setPassword(null);
+				loginResponse.setUser(userAux);
 			}else {
 				loginResponse.setMsg("Login Unsucces...");
 			}
